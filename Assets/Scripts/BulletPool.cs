@@ -35,8 +35,12 @@ public class BulletPool : MonoBehaviour
     }
 
     // switches the bullet off and puts it back in the pool
-    public void ReturnBullet(Bullet bullet)
+        public void ReturnBullet(Bullet bullet)
     {
+        // already returned this frame, so don't add it to the queue twice
+        if (!bullet.gameObject.activeSelf)
+            return;
+
         bullet.gameObject.SetActive(false);
         availableBullets.Enqueue(bullet);
     }
