@@ -9,6 +9,7 @@ public class TapToPlace : MonoBehaviour
 {
     [SerializeField] private GameObject gameWorldPrefab;
     [SerializeField] private ARRaycastManager raycastManager;
+    [SerializeField] private EnemySpawner enemySpawner;
 
     private bool hasPlaced = false;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -41,6 +42,7 @@ public class TapToPlace : MonoBehaviour
             Pose hitPose = hits[0].pose;
             Instantiate(gameWorldPrefab, hitPose.position, hitPose.rotation);
             hasPlaced = true;
+            enemySpawner.BeginSpawning(hitPose.position);
         }
     }
 }
