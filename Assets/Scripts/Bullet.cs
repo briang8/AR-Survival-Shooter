@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 8f;
     [SerializeField] private float lifetime = 3f;
     [SerializeField] private int damage = 1;
+    [SerializeField] private bool hitsPlayer = false;
 
     private BulletPool pool;
     private float timer;
@@ -32,15 +33,20 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    // damages anything that can take damage, then goes back to the pool
+    // damages the right kind of target, then goes back to the pool
     void OnTriggerEnter(Collider other)
     {
         IDamageable target = other.GetComponentInParent<IDamageable>();
 
-        if (target != null)
-        {
-            target.TakeDamage(damage);
-            pool.ReturnBullet(this);
-        }
+        if (target == null)
+            return;
+
+        // player bullets only hurt enemies, enemy bullets only hurt the player
+        bool targetIsPlayer = target is PlayerHealth;
+        if (targetIsPlayer != hitsPlayer)
+            return;
+
+        target.TakeDamage(damage);
+        pool.ReturnBullet(this);
     }
 }
