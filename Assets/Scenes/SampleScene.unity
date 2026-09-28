@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 695200718}
   - component: {fileID: 695200717}
   - component: {fileID: 695200716}
+  - component: {fileID: 695200720}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -603,7 +604,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_PlanePrefab: {fileID: 2610315319506179684, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-  m_DetectionMode: -1
+  m_DetectionMode: 1
 --- !u!114 &695200718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +638,20 @@ Transform:
   - {fileID: 390570971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &695200720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695200715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906402f742c57b94196528f64d5a996e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TapToPlace
+  gameWorldPrefab: {fileID: 6831431784427177867, guid: 98e1abc3383bb6345a3b72b81a667a52, type: 3}
+  raycastManager: {fileID: 695200716}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,63 +761,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &7102751460013857239
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 638199915921177180, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2610315319506179684, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
-      propertyPath: m_Name
-      value: CustomPLaneTracker
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d21350883e493fc439e04340bf9c2c41, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -811,4 +769,3 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1332109618}
   - {fileID: 695200719}
-  - {fileID: 7102751460013857239}
