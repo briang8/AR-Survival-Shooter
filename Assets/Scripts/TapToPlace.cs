@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
@@ -21,14 +22,14 @@ public class TapToPlace : MonoBehaviour
         Vector2 tapPosition;
 
         // finger tap on the phone
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
         {
-            tapPosition = Input.GetTouch(0).position;
+            tapPosition = Touchscreen.current.primaryTouch.position.ReadValue();
         }
         // mouse click, for testing in the editor
-        else if (Input.GetMouseButtonDown(0))
+        else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            tapPosition = Input.mousePosition;
+            tapPosition = Mouse.current.position.ReadValue();
         }
         else
         {
