@@ -406,6 +406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5487d133a4ee3f241aed32c56687d8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  spawner: {fileID: 2108673305}
+  playerHealth: {fileID: 688335337}
+  roundDuration: 30
 --- !u!4 &187822471
 Transform:
   m_ObjectHideFlags: 0
@@ -1007,7 +1010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TapToPlace
   gameWorldPrefab: {fileID: 6831431784427177867, guid: 98e1abc3383bb6345a3b72b81a667a52, type: 3}
   raycastManager: {fileID: 695200716}
-  enemySpawner: {fileID: 2108673305}
 --- !u!1 &711256185
 GameObject:
   m_ObjectHideFlags: 0

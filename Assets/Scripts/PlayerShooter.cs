@@ -11,6 +11,10 @@ public class PlayerShooter : MonoBehaviour
     // called by the fire button
     public void Shoot()
     {
+        // shooting only works while the round is running
+        if (!GameManager.Instance.IsPlaying())
+            return;
+            
         if (Time.time < nextFireTime)
             return;
 

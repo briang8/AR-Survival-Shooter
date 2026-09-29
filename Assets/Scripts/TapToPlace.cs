@@ -9,7 +9,7 @@ public class TapToPlace : MonoBehaviour
 {
     [SerializeField] private GameObject gameWorldPrefab;
     [SerializeField] private ARRaycastManager raycastManager;
-    [SerializeField] private EnemySpawner enemySpawner;
+    
 
     private bool hasPlaced = false;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -18,6 +18,10 @@ public class TapToPlace : MonoBehaviour
     {
         // stop checking taps once we've already placed the world
         if (hasPlaced)
+            return;
+        
+        // taps only place the world while the game is in the placement state
+        if (!GameManager.Instance.IsPlacing())
             return;
 
         Vector2 tapPosition;
@@ -42,7 +46,7 @@ public class TapToPlace : MonoBehaviour
             Pose hitPose = hits[0].pose;
             Instantiate(gameWorldPrefab, hitPose.position, hitPose.rotation);
             hasPlaced = true;
-            enemySpawner.BeginSpawning(hitPose.position);
+            GameManager.Instance.OnWorldPlaced(hitPose.position);
         }
     }
 }
