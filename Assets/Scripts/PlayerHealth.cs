@@ -52,6 +52,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (currentHealth == 0)
         {
+            SoundManager.Instance.PlayPlayerDeath();  
             isDead = true;
             Debug.Log("Game over");
             OnPlayerDied?.Invoke();

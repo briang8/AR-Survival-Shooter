@@ -72,6 +72,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 position = new Vector3(spawnCenter.x + circle.x, spawnCenter.y, spawnCenter.z + circle.y);
 
         activeEnemies.Add(CreateEnemy(position));
+        SoundManager.Instance.PlayEnemySpawn();
     }
 
     // factory method: decides which enemy type to build

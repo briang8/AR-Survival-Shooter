@@ -20,6 +20,7 @@ public class PlayerShooter : MonoBehaviour
 
         // start a little in front of the camera so the bullet is visible
         Vector3 spawnPosition = transform.position + transform.forward * 0.2f;
+        SoundManager.Instance.PlayPlayerShoot();
 
         bulletPool.GetBullet(spawnPosition, transform.rotation);
         nextFireTime = Time.time + fireCooldown;

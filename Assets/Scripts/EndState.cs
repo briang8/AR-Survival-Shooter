@@ -15,6 +15,9 @@ public class EndState : IGameState
         Debug.Log("State: End | Score: " + manager.Score
             + " | Defeated: " + manager.EnemiesDefeated
             + " | Survived: " + manager.TimeSurvived.ToString("F1") + "s");
+
+            Object.FindAnyObjectByType<LeaderboardManager>()
+            .SaveSession(manager.Score, manager.EnemiesDefeated, manager.TimeSurvived);   
     }
 
     public void Tick()

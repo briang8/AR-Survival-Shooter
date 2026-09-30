@@ -27,6 +27,7 @@ public class MeleeEnemy : Enemy
         else if (Time.time >= nextAttackTime)
         {
             playerHealth.TakeDamage(attackDamage);
+            SoundManager.Instance.PlayEnemyAttack();
             nextAttackTime = Time.time + attackCooldown;
         }
     }

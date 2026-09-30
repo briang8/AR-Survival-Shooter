@@ -35,6 +35,7 @@ public class ShooterEnemy : Enemy
     {
         // aim the bullet straight at the player
         Vector3 direction = (player.position - firePoint.position).normalized;
+        SoundManager.Instance.PlayEnemyShoot();
         bulletPool.GetBullet(firePoint.position, Quaternion.LookRotation(direction));
     }
 }
