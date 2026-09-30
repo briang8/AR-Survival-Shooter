@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 5;
     [Range(0f, 1f)]
     [SerializeField] private float shooterChance = 0.4f;
+    [SerializeField] private float hardModeSpeedMultiplier = 1.4f;
 
     private List<Enemy> activeEnemies = new List<Enemy>();
     private Vector3 spawnCenter;
@@ -23,7 +24,8 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnCenter = center;
         isSpawning = true;
-        nextSpawnTime = Time.time + spawnInterval;
+        float interval = GameManager.Instance.CurrentDifficulty == Difficulty.Hard ? spawnInterval * 0.6f : spawnInterval;
+        nextSpawnTime = Time.time + interval;
     }
 
     public void StopSpawning()
@@ -44,6 +46,11 @@ public class EnemySpawner : MonoBehaviour
         activeEnemies.Clear();
     }
 
+    private float GetSpeedMultiplier()
+    {
+        return GameManager.Instance.CurrentDifficulty == Difficulty.Hard ? hardModeSpeedMultiplier : 1f;
+    }
+
     void Update()
     {
         if (!isSpawning)
@@ -61,7 +68,8 @@ public class EnemySpawner : MonoBehaviour
         if (Time.time >= nextSpawnTime && activeEnemies.Count < maxEnemies)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnInterval;
+            float interval = GameManager.Instance.CurrentDifficulty == Difficulty.Hard ? spawnInterval * 0.6f : spawnInterval;
+            nextSpawnTime = Time.time + interval;
         }
     }
 

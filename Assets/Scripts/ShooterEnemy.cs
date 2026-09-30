@@ -22,7 +22,8 @@ public class ShooterEnemy : Enemy
 
         if (DistanceToPlayer() > shootingDistance)
         {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            float speedMultiplier = GameManager.Instance.CurrentDifficulty == Difficulty.Hard ? 1.4f : 1f;
+            transform.position += transform.forward * moveSpeed * speedMultiplier * Time.deltaTime;
         }
         else if (Time.time >= nextFireTime)
         {

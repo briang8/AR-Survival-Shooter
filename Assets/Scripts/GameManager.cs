@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-// Singleton that owns the game state, the round timer, and the score
+// Singleton that owns the game state, the round timer, and the score.
+public enum Difficulty { Easy, Hard }
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
+    public Difficulty CurrentDifficulty { get; private set; } = Difficulty.Easy;
     [SerializeField] private EnemySpawner spawner;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float roundDuration = 60f;
@@ -99,7 +101,14 @@ public class GameManager : MonoBehaviour
         ChangeState(new PlacementState(this));
     }
 
-        // called by the Restart button
+    // called by the difficulty buttons
+    public void SetDifficulty(int difficultyIndex)
+    {
+        CurrentDifficulty = (Difficulty)difficultyIndex;
+    }
+
+    
+    // called by the Restart button
     public void RestartGame()
     {
         skipMenu = true;
