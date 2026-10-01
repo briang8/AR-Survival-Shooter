@@ -9,6 +9,8 @@ public class LeaderboardUI : MonoBehaviour
     [SerializeField] private TMP_Text entriesText;
     [SerializeField] private LeaderboardManager leaderboardManager;
 
+    public GameObject Panel => leaderboardPanel;
+
     public void Open()
     {
         List<SessionRecord> records = leaderboardManager.LoadSessions();
@@ -30,11 +32,33 @@ public class LeaderboardUI : MonoBehaviour
             }
         }
 
-        leaderboardPanel.SetActive(true);
+        UIManager uiManager = FindAnyObjectByType<UIManager>();
+        if (uiManager != null)
+        {
+            uiManager.OpenExclusivePopup(leaderboardPanel);
+        }
+        else
+        {
+            leaderboardPanel.SetActive(true);
+        }
+
+        Transform closeButton = leaderboardPanel.transform.Find("CloseButton");
+        if (closeButton != null)
+        {
+            closeButton.gameObject.SetActive(true);
+        }
     }
 
     public void Close()
     {
-        leaderboardPanel.SetActive(false);
+        UIManager uiManager = FindAnyObjectByType<UIManager>();
+        if (uiManager != null)
+        {
+            uiManager.ClosePopup(leaderboardPanel);
+        }
+        else
+        {
+            leaderboardPanel.SetActive(false);
+        }
     }
 }

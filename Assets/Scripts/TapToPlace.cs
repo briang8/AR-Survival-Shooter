@@ -21,7 +21,10 @@ public class TapToPlace : MonoBehaviour
             return;
         
         // taps only place the world while the game is in the placement state
-        if (!GameManager.Instance.IsPlacing())
+        if (GameManager.Instance == null || !GameManager.Instance.IsPlacing())
+            return;
+
+        if (raycastManager == null || gameWorldPrefab == null)
             return;
 
         Vector2 tapPosition;

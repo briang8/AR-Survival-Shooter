@@ -75,8 +75,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        // random point on a circle around the placed world, at plane height
-        Vector2 circle = Random.insideUnitCircle.normalized * spawnRadius;
+        
+        // spawn somewhere in front of and to the sides of the camera, never directly behind
+        float cameraYaw = Camera.main.transform.eulerAngles.y;
+        float randomOffset = Random.Range(-100f, 100f); // roughly front-left to front-right, avoiding the back
+        float angle = (cameraYaw + randomOffset) * Mathf.Deg2Rad;
+        Vector2 circle = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * spawnRadius;
         Vector3 position = new Vector3(spawnCenter.x + circle.x, spawnCenter.y, spawnCenter.z + circle.y);
 
         activeEnemies.Add(CreateEnemy(position));
