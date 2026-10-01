@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
 
     private int lastShownSecond = -1;
     private Image healthBarFill;
+    private RectTransform healthBarFillRect;
+    private float healthBarFillWidth;
 
     public void OpenExclusivePopup(GameObject popup)
     {
@@ -168,8 +170,10 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        Sprite backgroundSprite = LoadRuntimeSprite("RpgUI/barBack_horizontalMid") ?? fallbackSprite;
-        Sprite fillSprite = LoadRuntimeSprite("RpgUI/barRed_horizontalMid") ?? fallbackSprite;
+        Sprite backgroundLeft = LoadRuntimeSprite("RpgUI/barBack_horizontalLeft") ?? fallbackSprite;
+        Sprite backgroundMid = LoadRuntimeSprite("RpgUI/barBack_horizontalMid") ?? fallbackSprite;
+        Sprite backgroundRight = LoadRuntimeSprite("RpgUI/barBack_horizontalRight") ?? fallbackSprite;
+        Sprite fillSprite = LoadRuntimeSprite("RpgUI/barRed_horizontalLeft") ?? fallbackSprite;
         GameObject barObject = new GameObject("HealthBar", typeof(RectTransform), typeof(Image));
         barObject.transform.SetParent(hudPanel.transform, false);
 
@@ -182,26 +186,45 @@ public class UIManager : MonoBehaviour
         barRect.sizeDelta = new Vector2(500f, 34f);
 
         Image background = barObject.GetComponent<Image>();
-        background.sprite = backgroundSprite;
+        background.sprite = backgroundMid;
         background.type = Image.Type.Sliced;
         background.color = new Color(0.18f, 0.12f, 0.08f, 0.9f);
+        CreateBarCap(barObject.transform, "Left", backgroundLeft, true);
+        CreateBarCap(barObject.transform, "Right", backgroundRight, false);
 
         GameObject fillObject = new GameObject("Fill", typeof(RectTransform), typeof(Image));
         fillObject.transform.SetParent(barObject.transform, false);
         RectTransform fillRect = fillObject.GetComponent<RectTransform>();
-        fillRect.anchorMin = Vector2.zero;
-        fillRect.anchorMax = Vector2.one;
-        fillRect.offsetMin = new Vector2(4f, 4f);
-        fillRect.offsetMax = new Vector2(-4f, -4f);
+        fillRect.anchorMin = new Vector2(0f, 0.5f);
+        fillRect.anchorMax = new Vector2(0f, 0.5f);
+        fillRect.pivot = new Vector2(0f, 0.5f);
+        fillRect.anchoredPosition = new Vector2(4f, 0f);
+        fillRect.sizeDelta = new Vector2(barRect.sizeDelta.x - 8f, 26f);
+        healthBarFillRect = fillRect;
+        healthBarFillWidth = fillRect.sizeDelta.x;
 
         healthBarFill = fillObject.GetComponent<Image>();
         healthBarFill.sprite = fillSprite;
-        healthBarFill.type = Image.Type.Filled;
-        healthBarFill.fillMethod = Image.FillMethod.Horizontal;
-        healthBarFill.fillOrigin = 0;
-        healthBarFill.fillAmount = 1f;
+        healthBarFill.type = Image.Type.Sliced;
         healthBarFill.color = new Color(0.9f, 0.16f, 0.08f);
-        barObject.transform.SetAsFirstSibling();
+        barObject.transform.SetAsLastSibling();
+    }
+
+    private static void CreateBarCap(Transform parent, string name, Sprite sprite, bool left)
+    {
+        GameObject capObject = new GameObject(name, typeof(RectTransform), typeof(Image));
+        capObject.transform.SetParent(parent, false);
+        RectTransform capRect = capObject.GetComponent<RectTransform>();
+        capRect.anchorMin = new Vector2(left ? 0f : 1f, 0.5f);
+        capRect.anchorMax = new Vector2(left ? 0f : 1f, 0.5f);
+        capRect.pivot = new Vector2(left ? 0f : 1f, 0.5f);
+        capRect.anchoredPosition = Vector2.zero;
+        capRect.sizeDelta = new Vector2(18f, 34f);
+
+        Image capImage = capObject.GetComponent<Image>();
+        capImage.sprite = sprite;
+        capImage.type = Image.Type.Simple;
+        capImage.preserveAspect = true;
     }
 
     private void AddQuitButton(Sprite buttonSprite, Sprite pressedSprite)
@@ -376,6 +399,12 @@ public class UIManager : MonoBehaviour
     private void UpdateHealth(int current, int max)
     {
         healthText.text = "Health: " + current;
+
+        if (healthBarFillRect != null)
+        {
+            float healthRatio = max > 0 ? Mathf.Clamp01((float)current / max) : 0f;
+            healthBarFillRect.sizeDelta = new Vector2(healthBarFillWidth * healthRatio, 26f);
+        }
     }
 
     private void UpdateScore(int score)
