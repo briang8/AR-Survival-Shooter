@@ -8,11 +8,23 @@ using System.Collections.Generic;
 public class TapToPlace : MonoBehaviour
 {
     [SerializeField] private GameObject gameWorldPrefab;
+    [SerializeField] private UnityEngine.XR.ARFoundation.ARPlaneManager planeManager;
     [SerializeField] private ARRaycastManager raycastManager;
     
 
     private bool hasPlaced = false;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+    // hides every detected plane's mesh and stops looking for new ones
+    private void HidePlanes()
+    {
+        foreach (var plane in planeManager.trackables)
+        {
+            plane.gameObject.SetActive(false);
+        }
+
+        planeManager.enabled = false;
+    }
 
     void Update()
     {
@@ -50,6 +62,7 @@ public class TapToPlace : MonoBehaviour
             Instantiate(gameWorldPrefab, hitPose.position, hitPose.rotation);
             hasPlaced = true;
             GameManager.Instance.OnWorldPlaced(hitPose.position);
+            HidePlanes();
         }
     }
 }

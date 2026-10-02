@@ -2013,6 +2013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TapToPlace
   gameWorldPrefab: {fileID: 6831431784427177867, guid: 98e1abc3383bb6345a3b72b81a667a52, type: 3}
+  planeManager: {fileID: 695200717}
   raycastManager: {fileID: 695200716}
 --- !u!1 &711256185
 GameObject:
